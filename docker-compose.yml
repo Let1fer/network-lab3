@@ -1,0 +1,41 @@
+services:
+  router:
+    build: ./router
+    privileged: true
+    networks:
+      mynetwork:
+        ipv4_address: 172.21.0.4
+        ipv6_address: 2001:db8::4
+
+  server1:
+    build: ./server
+    privileged: true
+    networks:
+      mynetwork:
+        ipv4_address: 172.21.0.2
+        ipv6_address: 2001:db8::2
+
+  server2:
+    build: ./server
+    privileged: true
+    networks:
+      mynetwork:
+        ipv4_address: 172.21.0.3
+        ipv6_address: 2001:db8::3
+
+  client:
+    build: ./client
+    privileged: true
+    networks:
+      mynetwork:
+        ipv4_address: 172.21.0.5
+        ipv6_address: 2001:db8::5
+
+networks:
+  mynetwork:
+    enable_ipv6: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+        - subnet: 2001:db8::/64
